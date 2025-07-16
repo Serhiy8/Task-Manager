@@ -21,11 +21,12 @@ const Label = styled.label`
     }
     & textarea {
         border-radius: 8px;
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: ${({theme}) => theme.colors.backgroundTextarea};
         border: none;
         outline: none;
         color: white;
         width: 100%;
+        resize: none;
     }
     & button {
         background-color: transparent;

@@ -1,11 +1,10 @@
 import SessionContext from "../supabaseServices/sessionContext";
-import { addTask } from "../supabaseServices/supabaseTable";
 import { Label } from "./FormAddTask.styled";
 import { BlurContainer } from "../utils/Styles.styled";
-import { useContext, useState } from "react";
+import { useState } from "react";
 
-const FormAddTask = () => {
-    const {user} = useContext(SessionContext);
+const FormAddTask = ({onSubmit}) => {
+    
     const [taskText, setTaskText] = useState('');
     
     const handleSubmit = async (e) => {
@@ -14,13 +13,8 @@ const FormAddTask = () => {
             console.log("Fields can't be empty.");
             return;
         }
-
-        const res = await addTask({user_id: user.id, task: taskText, status: false});
-        
-        if(res){
-            console.log(res)
-        }
-        setTaskText('')
+        onSubmit(taskText);
+        setTaskText('');
     }
 
     return(
@@ -29,7 +23,7 @@ const FormAddTask = () => {
                 <Label>
                     <div>
                         <p>New Task...</p>                    
-                        <textarea name="task" rows='5' value={taskText} onChange={(e) => setTaskText(e.target.value)}></textarea>
+                        <textarea id="task" name="task" rows='5' value={taskText} onChange={(e) => setTaskText(e.target.value)}></textarea>
                     </div>
                     <button type="submit">Add Task</button>
                 </Label>

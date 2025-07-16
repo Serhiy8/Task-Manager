@@ -8,4 +8,4 @@ const useForm = () => {
         return {value, handleChange}
     }
 
-export default useForm;
+export  {useForm};

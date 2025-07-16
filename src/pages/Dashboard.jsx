@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import Header from "../components/Header"
 import Sidebar from "../components/Sidebar"
 import TaskCard from "../components/TaskCard"
 import FormAddTask from "../components/FormAddTask"
 import { SectionDB } from "./Dashboard.styled"
-import { getTasks } from "../supabaseServices/supabaseTable"
+import { getTasks, addTask, updateTask } from "../supabaseServices/supabaseTable"
+import SessionContext from "../supabaseServices/sessionContext"
 
 
 const initialState = [{
@@ -30,28 +31,49 @@ const initialState = [{
 }]
 
 const Dashboard = () => {
-
+    const {user} = useContext(SessionContext);
     const [dataTask, setDataTask] = useState(initialState || []);
 
-    useEffect(() => {
-        const fetchData = async () => {
+    const fetchData = async () => {
             const data = await getTasks();
             if(data.error){
                 console.log(data.error);
                 return;
             }
-            setDataTask(data);
+            const filterById = data.sort((firstEl, secondEl) => secondEl.id - firstEl.id);
+            setDataTask(filterById);
         }
+
+    useEffect(() => {        
         fetchData();
-    })
+    },[])
+
+    const takeNewTask = async (task) => {
+        const newTask = {user_id: user.id, task: task, status: false}
+        const {error, status} = await addTask(newTask);
+        console.log(error, status)
+        if(error){
+            console.log(error.message)
+        }
+        if(status === 201){
+            fetchData();
+        }
+    }
+
+    const onStatusChange = async (updateValue, id) => {
+        const res = await updateTask(updateValue, id);
+        if(res.status === 204){
+            fetchData()
+    }
+    }
 
     return(
         <SectionDB>
-            <div>
+            <div className="container">
                 <Header />
                 <Sidebar dataTask={dataTask}/>
-                <FormAddTask />
-                <TaskCard dataTask={dataTask}/>
+                <FormAddTask onSubmit={takeNewTask}/>
+                <TaskCard dataTask={dataTask} statusChange={onStatusChange}/>
             </div>
         </SectionDB>
     )

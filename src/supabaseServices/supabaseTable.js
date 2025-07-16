@@ -10,12 +10,24 @@ const getTasks = async () => {
   return data;
 }
 const addTask = async (newTask) => {
-    const { error } = await supabase
+    const res = await supabase
   .from('todolist')
   .insert(newTask);
-  if(error){
-    return error;
+  if(res.error){
+    return res.error;
   }
+  return res;
 }
 
-export {getTasks, addTask};
+const updateTask = async (task, id) => {
+    const res = await supabase
+  .from('todolist')
+  .update(task)
+  .eq('id', id)
+  if(res.error){
+    return res.error;
+  }
+  return res;
+}
+
+export {getTasks, addTask, updateTask};

@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 const BlurContainer = styled.div`
     padding: 20px 12px;
-    border-bottom: 1px solid #ffffff;
-    background-color: rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid ${({theme}) => theme.colors.primary};
+    background-color: ${({theme}) => theme.colors.backgroundContainer};
     backdrop-filter: blur(6px);
     box-shadow: 0 0 30px;
     text-align: center;
