@@ -6,8 +6,7 @@ const SectionSt = styled.section`
     align-items: center;
     width: 100vw;
     height: 100vh;
-    color: ${({theme}) => theme.colors.primary};
-    background-image: url('../../public/img/leaves.jpg');
+    background-image: url('/img/mountains.jpg');
     background-size: cover;
     background-repeat: no-repeat;
 
@@ -21,11 +20,7 @@ const SectionSt = styled.section`
     padding: 26px 16px;
     background-color: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(6px);
-}
-& div form {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+    box-shadow: 0 0 30px;
 }
 & div form {
     display: flex;
@@ -38,13 +33,6 @@ const SectionSt = styled.section`
     display: flex;
     align-items: center;    
 }
-& div form label p {
-    position: absolute;
-    top: 0;
-    left: 0;
-    font-size: 12px;
-    transition: top 200ms;
-}
 
 & div form label input {
     background-color: transparent;
@@ -54,13 +42,13 @@ const SectionSt = styled.section`
     border-bottom: 1px solid ${({theme}) => theme.colors.primary};
     color: ${({theme}) => theme.colors.primary};
     
-    &:focus ~ p{
+    &:focus ~ p {
         top: -15px;
         font-size: 10px;
     }
 }
 
-& div form button{
+& div form button {
     background-color: ${({theme}) => theme.colors.primary};
     padding: 6px 0;
     border: none;
@@ -69,4 +57,26 @@ const SectionSt = styled.section`
 }
 `
 
-export {SectionSt}
+const TextEmail = styled.p`
+    position: absolute;
+    top: ${({$value}) => ($value ? '-15px' : '0')};
+    left: 0;
+    font-size: ${({$value}) => ($value? '10px' : '12px')};
+    transition: top 200ms;
+`
+const TextPassword = styled.p`
+    position: absolute;
+    top: ${({$value}) => ($value ? '-15px' : '0')};
+    left: 0;
+    font-size: ${({$value}) => ($value ? '10px' : '12px')};
+    transition: top 200ms;
+`
+
+const Text = styled.p`
+    font-size: 10px;
+    & a {
+        color: ${({theme}) => theme.colors.primary};
+    }
+`
+
+export {SectionSt,TextEmail, TextPassword , Text}
