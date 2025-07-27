@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { BlurContainer } from "../utils/Styles.styled";
 import { 
+    Thumb,
     TaskList,
     TaskListItem, 
     TaskText, 
@@ -38,7 +38,7 @@ const TaskCard = ({dataTask, statusChange}) => {
         }
     
     return(
-        <BlurContainer>
+        <Thumb>
             <TaskList>
                 {dataTask.map((el) => {
                     const addTime = el.created_at;
@@ -71,7 +71,7 @@ const TaskCard = ({dataTask, statusChange}) => {
                         </TaskListItem>)
                     })}
             </TaskList>
-        </BlurContainer>
+        </Thumb>
     )
 }
 
